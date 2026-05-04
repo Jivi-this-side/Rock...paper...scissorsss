@@ -34,9 +34,9 @@ function ResponsiveScene({ playerChoice, aiChoice, gameState }: GameSceneProps) 
 
   const handSpacing = useMemo(() => {
     if (isMobile) {
-      return viewport.width * 0.28;
+      return viewport.width * 0.22;
     }
-    return Math.min(2.2, viewport.width * 0.16);
+    return Math.min(2.2, viewport.width * 0.13);
   }, [viewport.width, isMobile]);
 
   return (
