@@ -161,7 +161,7 @@ export function Hand({ choice = Choice.ROCK, isAI = false, shaking = false }: Ha
         1,
       ]}
     >
-      <primitive object={cloned} scale={1.25} />
+      <primitive object={cloned} scale={1} />
     </group>
   );
 }
