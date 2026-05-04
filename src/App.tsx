@@ -178,7 +178,7 @@ export default function App() {
               className="absolute inset-0 flex items-center justify-center pointer-events-none"
             >
               <p className="text-xl md:text-4xl font-mono font-bold tracking-[0.3em] md:tracking-[0.5em] text-white/10 uppercase italic animate-pulse">
-                Analyzing Logic...
+                ...
               </p>
             </motion.div>
           )}
@@ -249,9 +249,7 @@ export default function App() {
                   <RefreshCw size={16} />
                   Play Again
                 </button>
-                <p className="text-[8px] md:text-[10px] text-white/30 uppercase tracking-widest">
-                  Neural Link Synchronized
-                </p>
+               
               </motion.div>
             ) : null}
           </AnimatePresence>
