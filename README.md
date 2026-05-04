@@ -1,6 +1,6 @@
 
 
-# 3D Rock Paper Scissors Game
+# Rock Paper Scissors Game
 
 A visually stunning Rock Paper Scissors game featuring 3D hand models that face each other in an epic battle arena.
 
@@ -45,8 +45,7 @@ A visually stunning Rock Paper Scissors game featuring 3D hand models that face 
 ├── types.ts             # TypeScript interfaces and enums
 ├── main.tsx             # React entry point
 ├── index.css            # Global styles
-└── public/
-    └── oopo_hand.glb    # 3D hand model file
+└── oopo_hand.glb        # 3D hand model file
 ```
 
 
