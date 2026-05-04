@@ -11,7 +11,11 @@ interface HandProps {
   shaking?: boolean;
 }
 
-export function Hand({ choice = Choice.ROCK, isAI = false, shaking = false }: HandProps) {
+export function Hand({
+  choice = Choice.ROCK,
+  isAI = false,
+  shaking = false,
+}: HandProps) {
   const groupRef = useRef<THREE.Group>(null);
   const { viewport } = useThree();
 
@@ -39,7 +43,8 @@ export function Hand({ choice = Choice.ROCK, isAI = false, shaking = false }: Ha
         else if (n.includes("index")) map.index.push(obj);
         else if (n.includes("middle")) map.middle.push(obj);
         else if (n.includes("ring")) map.ring.push(obj);
-        else if (n.includes("pinky") || n.includes("little")) map.pinky.push(obj);
+        else if (n.includes("pinky") || n.includes("little"))
+          map.pinky.push(obj);
       }
     });
 
@@ -58,7 +63,7 @@ export function Hand({ choice = Choice.ROCK, isAI = false, shaking = false }: Ha
       if (obj instanceof THREE.Mesh) {
         obj.material = new THREE.MeshStandardMaterial({
           // AI gets a darker skin tone, Player gets a lighter one
-          color: isAI ? "#8d5524" : "#ffdbac", 
+          color: isAI ? "#8d5524" : "#ffdbac",
           roughness: 0.5,
           metalness: 0.05,
         });
@@ -70,11 +75,7 @@ export function Hand({ choice = Choice.ROCK, isAI = false, shaking = false }: Ha
   // ✅ CURL (ONE AXIS ONLY)
   // =========================
   const curl = (bone: THREE.Bone, target: number, speed = 0.15) => {
-    bone.rotation.x = THREE.MathUtils.lerp(
-      bone.rotation.x,
-      target,
-      speed
-    );
+    bone.rotation.x = THREE.MathUtils.lerp(bone.rotation.x, target, speed);
   };
 
   // =========================
@@ -108,7 +109,7 @@ export function Hand({ choice = Choice.ROCK, isAI = false, shaking = false }: Ha
       middle: [0.2, 0.2, 0.2],
       ring: [0.2, 0.2, 0.2],
       pinky: [0.2, 0.2, 0.2],
-    }
+    },
   };
 
   // =========================
@@ -129,8 +130,9 @@ export function Hand({ choice = Choice.ROCK, isAI = false, shaking = false }: Ha
       groupRef.current.rotation.z *= 0.9;
     }
 
-    const currentPose =
-      shaking ? poses[Choice.ROCK] : (poses[choice] || poses[Choice.ROCK]);
+    const currentPose = shaking
+      ? poses[Choice.ROCK]
+      : poses[choice] || poses[Choice.ROCK];
 
     Object.entries(bones).forEach(([finger, fingerBones]) => {
       fingerBones.forEach((bone, i) => {
@@ -138,30 +140,23 @@ export function Hand({ choice = Choice.ROCK, isAI = false, shaking = false }: Ha
         curl(bone, target);
       });
     });
-
-    // Responsive Positioning: Adjust X position based on viewport width
-    const responsiveX = isAI ? viewport.width * 0.18 : -viewport.width * 0.18;
-    groupRef.current.position.x = THREE.MathUtils.lerp(groupRef.current.position.x, responsiveX, 0.1);
   });
 
   // =========================
-  // 🔥 ORIENTATION + MIRROR
+  // 🔥 ORIENTATION + MIRROR - SIDE VIEW WITH INWARD TILT
   // =========================
   return (
     <group
       ref={groupRef}
       rotation={[
-        Math.PI / 2,        // face downward
-        isAI ? Math.PI : 0, // face each other
-        0,
+        0, // Hands upright (no X tilt)
+        isAI ? -Math.PI / 3 : Math.PI / 3, // AI palm faces left, Player palm faces right
+        isAI ? -Math.PI / 4 : Math.PI / 4,
+        // Both tilt INWARD toward each other (45°)
       ]}
-      scale={[
-        isAI ? 0.75 : -0.75, // 🔥 mirror player hand
-        1,
-        1,
-      ]}
+      scale={1.25}
     >
-      <primitive object={cloned} scale={0.75} />
+      <primitive object={cloned} scale={1.5} />
     </group>
   );
 }
