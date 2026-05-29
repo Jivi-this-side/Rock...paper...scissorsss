@@ -71,9 +71,7 @@ export function Hand({
     });
   }, [cloned, isAI]);
 
-  // =========================
-  // ✅ CURL (ONE AXIS ONLY)
-  // =========================
+
   const curl = (bone: THREE.Bone, target: number, speed = 0.15) => {
     bone.rotation.x = THREE.MathUtils.lerp(bone.rotation.x, target, speed);
   };
@@ -112,9 +110,7 @@ export function Hand({
     },
   };
 
-  // =========================
-  // ANIMATION
-  // =========================
+
   useFrame((state) => {
     if (!groupRef.current) return;
 
@@ -149,11 +145,11 @@ export function Hand({
     <group
       ref={groupRef}
       rotation={[
-        0, // Hands upright (no X tilt)
-        isAI ? -Math.PI / 3 : Math.PI / 3, // AI palm faces left, Player palm faces right
-        isAI ? -Math.PI / 4 : Math.PI / 4,
-        // Both tilt INWARD toward each other (45°)
+        Math.PI / 2, 
+        isAI ? Math.PI : 0, 
+        0, 
       ]}
+     
       scale={1.25}
     >
       <primitive object={cloned} scale={1.5} />
@@ -162,3 +158,4 @@ export function Hand({
 }
 
 useGLTF.preload("/oopo_hand.glb");
+
